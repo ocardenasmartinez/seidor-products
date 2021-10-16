@@ -116,6 +116,34 @@ public class ProductBusinessTest {
         });
     }
 
+    @Test
+    public void insertProductPriceBadFormat() {
+        Assertions.assertThrows(PriceFormatException.class, () -> {
+            productBusiness.insertProduct(ProductRequest.builder()
+                    .sku("FAL-1000000")
+                    .name("name")
+                    .brand("brand")
+                    .size("")
+                    .price(0D)
+                    .image("")
+                    .build());
+        });
+    }
+
+    @Test
+    public void insertProductPriceImageBadFormat() {
+        Assertions.assertThrows(ImageFormatException.class, () -> {
+            productBusiness.insertProduct(ProductRequest.builder()
+                    .sku("FAL-1000000")
+                    .name("name")
+                    .brand("brand")
+                    .size("")
+                    .price(555D)
+                    .image("")
+                    .build());
+        });
+    }
+
     //when(universityRepository.findByName(any(String.class))).thenReturn(null);
 
 }
