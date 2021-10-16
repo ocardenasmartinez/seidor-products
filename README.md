@@ -36,4 +36,4 @@ In the console
 ## Brief explanation about architectura
 
 Three-layer architecture, controller layer for endpoints, business layer for handle business
-logic and data layer for persist data
+logic and data layer for handle data
