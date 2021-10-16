@@ -75,6 +75,14 @@ public class ProductsBusinessImpl implements ProductBusiness {
         return ListProductResponse.builder().product(products).build();
     }
 
+    @Override
+    public ProductResponse deleteProduct(String sku) throws Exception {
+        ProductsEntity productsEntity = productsRepository.findBySku(sku);
+        if(!ofNullable(productsEntity).isPresent()) throw new ProductNotExistException();
+        productsRepository.delete(productsEntity);
+        return ProductResponse.builder().state(OK).build();
+    }
+
     private Consumer<ProductsEntity> getProductsEntityConsumer(List<OneProductResponse> products) {
         return product -> {
             products.add(OneProductResponse.builder()
@@ -87,15 +95,6 @@ public class ProductsBusinessImpl implements ProductBusiness {
                     .build());
         };
     }
-
-    @Override
-    public ProductResponse deleteProduct(String sku) throws Exception {
-        ProductsEntity productsEntity = productsRepository.findBySku(sku);
-        if(!ofNullable(productsEntity).isPresent()) throw new ProductNotExistException();
-        productsRepository.delete(productsEntity);
-        return ProductResponse.builder().state(OK).build();
-    }
-
 
     private ProductsEntity saveProduct(ProductRequest request) {
         return productsRepository.save(ProductsEntity.builder()

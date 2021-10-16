@@ -5,6 +5,8 @@ import cl.falabella.buisness.ProductsBusinessImpl;
 import cl.falabella.controllers.exceptions.*;
 import cl.falabella.entities.data.ProductsEntity;
 import cl.falabella.entities.request.ProductRequest;
+import cl.falabella.entities.responses.ListProductResponse;
+import cl.falabella.entities.responses.OneProductResponse;
 import cl.falabella.entities.responses.ProductResponse;
 import cl.falabella.repositories.ProductsRepository;
 import org.junit.jupiter.api.Test;
@@ -12,6 +14,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -177,6 +182,71 @@ public class ProductBusinessTest {
                     .image("http://localhost:8080/")
                     .build()), ProductResponse.builder().state("OK").build());
 
+    }
+
+    @Test
+    public void updateProductNotExist() {
+        when(productsRepository.findBySku(any(String.class))).thenReturn(null);
+        assertThrows(ProductNotExistException.class, () -> {
+            productBusiness.updateProduct(ProductRequest.builder()
+                    .sku("FAL-1000000")
+                    .name("name")
+                    .brand("brand")
+                    .size("")
+                    .price(555D)
+                    .image("http://localhost:8080/")
+                    .build());
+        });
+    }
+
+    @Test
+    public void updateProductOK() throws Exception {
+        when(productsRepository.findBySku(any(String.class))).thenReturn(ProductsEntity.builder().build());
+        assertEquals(productBusiness.updateProduct(ProductRequest.builder()
+            .sku("FAL-1000000")
+            .name("name")
+            .brand("brand")
+            .size("")
+            .price(555D)
+            .image("http://localhost:8080/")
+            .build()), ProductResponse.builder().state("OK").build());
+
+    }
+
+    @Test
+    public void getProductNotExist() {
+        when(productsRepository.findBySku(any(String.class))).thenReturn(null);
+        assertThrows(ProductNotExistException.class, () -> {
+            productBusiness.getProduct("");
+        });
+    }
+
+    @Test
+    public void getProductOK() throws Exception {
+        when(productsRepository.findBySku(any(String.class))).thenReturn(createProductEntity());
+        assertEquals(productBusiness.getProduct(""), createOneProductRequest());
+    }
+
+    @Test
+    public void getAllProductOK() throws Exception {
+        List<ProductsEntity> productsEntityList = new ArrayList<>();
+        productsEntityList.add(createProductEntity());
+        when(productsRepository.findAll()).thenReturn(productsEntityList);
+        assertEquals(productBusiness.getProducts(), createListProductResponse());
+    }
+
+    private ProductsEntity createProductEntity() {
+        return ProductsEntity.builder().sku("").image("").price(0D).image("").size("").brand("").name("").build();
+    }
+
+    private OneProductResponse createOneProductRequest() {
+        return OneProductResponse.builder().sku("").image("").price(0D).image("").size("").brand("").name("").build();
+    }
+
+    private ListProductResponse createListProductResponse() {
+        List<OneProductResponse> oneProductResponseList = new ArrayList<>();
+        oneProductResponseList.add(createOneProductRequest());
+        return ListProductResponse.builder().product(oneProductResponseList).build();
     }
 
 }
