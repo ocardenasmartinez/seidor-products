@@ -235,6 +235,20 @@ public class ProductBusinessTest {
         assertEquals(productBusiness.getProducts(), createListProductResponse());
     }
 
+    @Test
+    public void deleteProductNotExist() {
+        when(productsRepository.findBySku(any(String.class))).thenReturn(null);
+        assertThrows(ProductNotExistException.class, () -> {
+            productBusiness.deleteProduct("");
+        });
+    }
+
+    @Test
+    public void deleteProductOK() throws Exception {
+        when(productsRepository.findBySku(any(String.class))).thenReturn(createProductEntity());
+        assertEquals(productBusiness.deleteProduct(""), ProductResponse.builder().state("OK").build());
+    }
+
     private ProductsEntity createProductEntity() {
         return ProductsEntity.builder().sku("").image("").price(0D).image("").size("").brand("").name("").build();
     }
