@@ -3,14 +3,20 @@ package cl.falabella.business.test;
 import cl.falabella.buisness.ProductBusiness;
 import cl.falabella.buisness.ProductsBusinessImpl;
 import cl.falabella.controllers.exceptions.*;
+import cl.falabella.entities.data.ProductsEntity;
 import cl.falabella.entities.request.ProductRequest;
+import cl.falabella.entities.responses.ProductResponse;
 import cl.falabella.repositories.ProductsRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class ProductBusinessTest {
@@ -23,35 +29,35 @@ public class ProductBusinessTest {
 
     @Test
     public void insertProductSKUNull() {
-        Assertions.assertThrows(SKUNullException.class, () -> {
+        assertThrows(SKUNullException.class, () -> {
             productBusiness.insertProduct(ProductRequest.builder().sku(null).build());
         });
     }
 
     @Test
     public void insertProductSKUBadFormat() {
-        Assertions.assertThrows(SKUFormatException.class, () -> {
+        assertThrows(SKUFormatException.class, () -> {
             productBusiness.insertProduct(ProductRequest.builder().sku("").build());
         });
     }
 
     @Test
     public void insertProductNameNull() {
-        Assertions.assertThrows(NameNullException.class, () -> {
+        assertThrows(NameNullException.class, () -> {
             productBusiness.insertProduct(ProductRequest.builder().sku("FAL-1000000").name(null).build());
         });
     }
 
     @Test
     public void insertProductBrandNull() {
-        Assertions.assertThrows(BrandNullException.class, () -> {
+        assertThrows(BrandNullException.class, () -> {
             productBusiness.insertProduct(ProductRequest.builder().sku("FAL-1000000").name("").brand(null).build());
         });
     }
 
     @Test
     public void insertProductSizeNull() {
-        Assertions.assertThrows(SizeNullException.class, () -> {
+        assertThrows(SizeNullException.class, () -> {
             productBusiness.insertProduct(ProductRequest.builder()
                     .sku("FAL-1000000")
                     .name("")
@@ -63,7 +69,7 @@ public class ProductBusinessTest {
 
     @Test
     public void insertProductPriceNull() {
-        Assertions.assertThrows(PriceNullException.class, () -> {
+        assertThrows(PriceNullException.class, () -> {
             productBusiness.insertProduct(ProductRequest.builder()
                     .sku("FAL-1000000")
                     .name("")
@@ -76,7 +82,7 @@ public class ProductBusinessTest {
 
     @Test
     public void insertProductImageNull() {
-        Assertions.assertThrows(ImageNullException.class, () -> {
+        assertThrows(ImageNullException.class, () -> {
             productBusiness.insertProduct(ProductRequest.builder()
                     .sku("FAL-1000000")
                     .name("")
@@ -90,7 +96,7 @@ public class ProductBusinessTest {
 
     @Test
     public void insertProductNameBadFormat() {
-        Assertions.assertThrows(NameFormatException.class, () -> {
+        assertThrows(NameFormatException.class, () -> {
             productBusiness.insertProduct(ProductRequest.builder()
                     .sku("FAL-1000000")
                     .name("")
@@ -104,7 +110,7 @@ public class ProductBusinessTest {
 
     @Test
     public void insertProductBrandBadFormat() {
-        Assertions.assertThrows(BrandFormatException.class, () -> {
+        assertThrows(BrandFormatException.class, () -> {
             productBusiness.insertProduct(ProductRequest.builder()
                     .sku("FAL-1000000")
                     .name("name")
@@ -118,7 +124,7 @@ public class ProductBusinessTest {
 
     @Test
     public void insertProductPriceBadFormat() {
-        Assertions.assertThrows(PriceFormatException.class, () -> {
+        assertThrows(PriceFormatException.class, () -> {
             productBusiness.insertProduct(ProductRequest.builder()
                     .sku("FAL-1000000")
                     .name("name")
@@ -131,8 +137,8 @@ public class ProductBusinessTest {
     }
 
     @Test
-    public void insertProductPriceImageBadFormat() {
-        Assertions.assertThrows(ImageFormatException.class, () -> {
+    public void insertProductImageBadFormat() {
+        assertThrows(ImageFormatException.class, () -> {
             productBusiness.insertProduct(ProductRequest.builder()
                     .sku("FAL-1000000")
                     .name("name")
@@ -144,6 +150,33 @@ public class ProductBusinessTest {
         });
     }
 
-    //when(universityRepository.findByName(any(String.class))).thenReturn(null);
+    @Test
+    public void insertProductProductExist() {
+        when(productsRepository.findBySku(any(String.class))).thenReturn(ProductsEntity.builder().build());
+        assertThrows(ProductExistException.class, () -> {
+            productBusiness.insertProduct(ProductRequest.builder()
+                    .sku("FAL-1000000")
+                    .name("name")
+                    .brand("brand")
+                    .size("")
+                    .price(555D)
+                    .image("http://localhost:8080/")
+                    .build());
+        });
+    }
+
+    @Test
+    public void insertProductOK() throws Exception {
+        when(productsRepository.findBySku(any(String.class))).thenReturn(null);
+        assertEquals(productBusiness.insertProduct(ProductRequest.builder()
+                    .sku("FAL-1000000")
+                    .name("name")
+                    .brand("brand")
+                    .size("")
+                    .price(555D)
+                    .image("http://localhost:8080/")
+                    .build()), ProductResponse.builder().state("OK").build());
+
+    }
 
 }
