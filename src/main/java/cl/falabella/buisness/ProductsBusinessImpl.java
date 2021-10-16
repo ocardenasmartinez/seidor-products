@@ -108,8 +108,8 @@ public class ProductsBusinessImpl implements ProductBusiness {
     }
 
     private void validRequestProduct(ProductRequest request) throws Exception {
-        if(!Pattern.compile(SKU_PATTER).matcher(request.getSku()).matches()) throw new SKUFormatException();
         ofNullable(request.getSku()).orElseThrow(SKUNullException::new);
+        if(!Pattern.compile(SKU_PATTER).matcher(request.getSku()).matches()) throw new SKUFormatException();
         ofNullable(request.getName()).orElseThrow(NameNullException::new);
         ofNullable(request.getBrand()).orElseThrow(BrandNullException::new);
         ofNullable(request.getSize()).orElseThrow(SizeNullException::new);

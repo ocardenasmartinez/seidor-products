@@ -87,12 +87,14 @@
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.2</version>
-				<!--configuration>
+				<configuration>
 					<excludes>
-						<exclude>cl/seidor/entities/**/*</exclude>
-						<exclude>cl/seidor/Application.class</exclude>
+						<exclude>cl/falabella/entities/**/*</exclude>
+						<exclude>cl/falabella/controllers/exceptions/**/*</exclude>
+						<exclude>cl/falabella/Application.class</exclude>
+						<exclude>cl/falabella/controllers/ExceptionsHandlerController.class</exclude>
 					</excludes>
-				</configuration-->
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
