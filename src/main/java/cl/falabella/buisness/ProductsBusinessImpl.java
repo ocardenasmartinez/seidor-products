@@ -7,14 +7,10 @@ import cl.falabella.entities.responses.ListProductResponse;
 import cl.falabella.entities.responses.OneProductResponse;
 import cl.falabella.entities.responses.ProductResponse;
 import cl.falabella.repositories.ProductsRepository;
-import org.apache.commons.validator.UrlValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static java.util.Optional.ofNullable;
 
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
