@@ -6,9 +6,12 @@
 - Spring Boot
 - Postgres
 
-
-## Install database
-Run postgres and create table
+## Database configuration
+- driverClassname=org.postgresql.Driver
+- url=jdbc:postgresql://localhost:5432/postgres
+- username=postgres
+- password=tallo_123
+- Run postgres and create table
 
 ```bash
 CREATE TABLE public.products (
