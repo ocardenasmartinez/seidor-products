@@ -1,4 +1,12 @@
 # Products Service
+
+## Technology
+- Java 11+
+- Maven 3
+- Spring Boot
+- Postgres
+
+
 ## Install database
 Run postgres and create table
 
@@ -24,4 +32,6 @@ In the console
 3.- mvn package
 4.- java -jar target/seidor-products-1.0.jar
 ```
+
+## Technology
 
