@@ -1,7 +1,7 @@
 # Products Service
 
 ## Technology
-- Java 11+
+- Java 11
 - Maven 3
 - Spring Boot
 - Postgres
@@ -33,5 +33,7 @@ In the console
 4.- java -jar target/seidor-products-1.0.jar
 ```
 
-## Technology
+## Brief explanation about architectura
 
+Three-layer architecture, controller layer for endpoints, business layer for handle business
+logic and data layer for persist data
