@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
 import javax.sql.DataSource;
 
@@ -31,4 +32,11 @@ public class DataSourceConfigurator {
         dataSourceBuilder.password(password);
         return dataSourceBuilder.build();
     }
+
+    /*@Bean(name="entityManagerFactory")
+    public LocalSessionFactoryBean sessionFactory() {
+        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+        sessionFactory.setDataSource(getDataSource());
+        return sessionFactory;
+    }*/
 }
