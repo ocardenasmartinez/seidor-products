@@ -16,7 +16,7 @@ In the console
 4.- java -jar target/seidor-products-1.0.jar
 ```
 ```bash
-Insertar product
+Insertar producto
 curl -X POST -H "Content-Type: application/json" \
     -d '{
     "sku": "FAL-1000001",
@@ -28,7 +28,7 @@ curl -X POST -H "Content-Type: application/json" \
 }' \
  http://localhost:8080/products/insert
 
-Actualizar product
+Actualizar producto
 curl -X PUT -H "Content-Type: application/json" \
     -d '{
     "sku": "FAL-1000001",
@@ -46,10 +46,9 @@ curl http://localhost:8080/products/get?sku=FAL-1000001
 Obtener todos los productos
 curl http://localhost:8080/products/getall
 
-Borrar product
+Borrar producto
 curl -X "DELETE" http://localhost:8080/products/delete?sku=FAL-1000001
 ```
-## Brief explanation about architectura
-
+## Brief architectura explanation 
 Three-layer architecture, controller layer for endpoints, business layer for handle business
 logic and data layer for handle data
