@@ -33,10 +33,5 @@ public class DataSourceConfigurator {
         return dataSourceBuilder.build();
     }
 
-    /*@Bean(name="entityManagerFactory")
-    public LocalSessionFactoryBean sessionFactory() {
-        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-        sessionFactory.setDataSource(getDataSource());
-        return sessionFactory;
-    }*/
+
 }

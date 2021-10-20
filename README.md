@@ -4,27 +4,7 @@
 - Java 11
 - Maven 3
 - Spring Boot
-- Postgres
-
-## Database configuration
-- driverClassname=org.postgresql.Driver
-- url=jdbc:postgresql://localhost:5432/postgres
-- username=postgres
-- password=tallo_123
-- Run postgres and create table
-
-```bash
-CREATE TABLE public.products (
-id serial NOT NULL,
-sku varchar NOT NULL,
-"name" varchar NOT NULL,
-brand varchar NOT NULL,
-"size" varchar NOT NULL,
-price float8 NOT NULL,
-image varchar NOT NULL,
-CONSTRAINT products_pkey PRIMARY KEY (id)
-);
-  ```
+- H2
 
 ## Build and execution
 In the console
