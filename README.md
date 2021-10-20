@@ -16,7 +16,7 @@ In the console
 4.- java -jar target/seidor-products-1.0.jar
 ```
 ```bash
-Insert product
+Insertar product
 curl -X POST -H "Content-Type: application/json" \
     -d '{
     "sku": "FAL-1000001",
@@ -28,7 +28,7 @@ curl -X POST -H "Content-Type: application/json" \
 }' \
  http://localhost:8080/products/insert
 
-Update product
+Actualizar product
 curl -X PUT -H "Content-Type: application/json" \
     -d '{
     "sku": "FAL-1000001",
